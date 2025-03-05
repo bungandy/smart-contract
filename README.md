@@ -1,4 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This project implements a decentralized profile management system built on the Ethereum blockchain. It allows users to create, read, and update their profiles with data stored both on-chain and off-chain for optimal performance and cost efficiency.
+
+### Key Features:
+- **Blockchain Integration**: Profile data is stored on the Ethereum blockchain, ensuring transparency and immutability
+- **Wallet Authentication**: Users authenticate using their Ethereum wallet addresses
+- **Gas Optimization**: Smart contract designed for minimal gas consumption
+- **Real-time Updates**: Profile changes are reflected immediately both on-chain and in the UI
+
+### Technical Stack:
+- Frontend: Next.js
+- Blockchain: Ethereum (EVM compatible)
+- Smart Contracts: Solidity
+- Web3 Integration: ethers.js/web3.js
+- Authentication: Wallet Connect / MetaMask
+
+### Blockchain Interaction:
+- **Create Profile**: Creates a new profile entry in the smart contract, associating it with the user's wallet address
+- **Get Profile**: Retrieves profile data from the blockchain using the profile ID
+- **Update Profile**: Modifies existing profile data through a smart contract transaction
 
 ## Getting Started
 
@@ -16,21 +34,87 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## API Documentation
 
-## Learn More
+### Profile Endpoints
 
-To learn more about Next.js, take a look at the following resources:
+Each endpoint interacts with the Ethereum blockchain through smart contracts. All write operations (create and update) require gas fees and wallet signatures.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Create Profile
+```http
+POST /api/profile
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Creates a new profile and stores it on the Ethereum blockchain. Requires a connected wallet for transaction signing.
 
-## Deploy on Vercel
+Request body:
+```json
+{
+    "name": "Andy",
+    "email": "bungandy@gmail.com",
+    "walletAddress": "0x1234567890abcdef1234567890abcdef12345678"
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Response:
+```json
+{
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "name": "Andy",
+    "email": "bungandy@gmail.com",
+    "walletAddress": "0x1234567890abcdef1234567890abcdef12345678",
+    "createdAt": "2025-03-19T08:30:00Z"
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Get Profile
+```http
+GET /api/profile/{id}
+```
+
+Retrieves profile data from the blockchain. This is a read-only operation that doesn't require gas fees.
+
+Response:
+```json
+{
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "name": "Andy",
+    "email": "bungandy@gmail.com",
+    "walletAddress": "0x1234567890abcdef1234567890abcdef12345678",
+    "createdAt": "2025-03-19T08:30:00Z"
+}
+```
+
+#### Update Profile
+```http
+PUT /api/profile/{id}
+```
+
+Updates an existing profile on the blockchain. Requires wallet signature and gas fees for the transaction.
+
+Request body:
+```json
+{
+    "name": "Andy",
+    "email": "bungandy@gmail.com",
+    "walletAddress": "0x1234567890abcdef1234567890abcdef12345678"
+}
+```
+
+Response:
+```json
+{
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "name": "Andy",
+    "email": "bungandy@gmail.com",
+    "walletAddress": "0x1234567890abcdef1234567890abcdef12345678",
+    "updatedAt": "2025-03-19T08:30:00Z"
+}
+```
+
+### Security Considerations
+- All write operations require valid wallet signatures
+- Profile updates can only be performed by the wallet owner
+- Smart contract includes access control mechanisms
+- Gas fees are required for create and update operations
