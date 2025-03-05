@@ -43,7 +43,7 @@ Each endpoint interacts with the Ethereum blockchain through smart contracts. Al
 
 #### Create Profile
 ```http
-POST /api/profile
+POST /api/create-profile
 ```
 
 Creates a new profile and stores it on the Ethereum blockchain. Requires a connected wallet for transaction signing.
@@ -51,26 +51,26 @@ Creates a new profile and stores it on the Ethereum blockchain. Requires a conne
 Request body:
 ```json
 {
-    "name": "Andy",
-    "email": "bungandy@gmail.com",
-    "walletAddress": "0x1234567890abcdef1234567890abcdef12345678"
+  "name": "Andy",
+  "email": "bungandy@gmail.com",
+  "walletAddress": "0x1234567890abcdef1234567890abcdef12345678"
 }
 ```
 
 Response:
 ```json
 {
-    "id": "123e4567-e89b-12d3-a456-426614174000",
-    "name": "Andy",
-    "email": "bungandy@gmail.com",
-    "walletAddress": "0x1234567890abcdef1234567890abcdef12345678",
-    "createdAt": "2025-03-19T08:30:00Z"
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "name": "Andy",
+  "email": "bungandy@gmail.com",
+  "walletAddress": "0x1234567890abcdef1234567890abcdef12345678",
+  "createdAt": "2025-03-19T08:30:00Z"
 }
 ```
 
 #### Get Profile
 ```http
-GET /api/profile/{id}
+GET /api/get-profile?walletAddress={address}
 ```
 
 Retrieves profile data from the blockchain. This is a read-only operation that doesn't require gas fees.
@@ -78,17 +78,17 @@ Retrieves profile data from the blockchain. This is a read-only operation that d
 Response:
 ```json
 {
-    "id": "123e4567-e89b-12d3-a456-426614174000",
-    "name": "Andy",
-    "email": "bungandy@gmail.com",
-    "walletAddress": "0x1234567890abcdef1234567890abcdef12345678",
-    "createdAt": "2025-03-19T08:30:00Z"
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "name": "Andy",
+  "email": "bungandy@gmail.com",
+  "walletAddress": "0x1234567890abcdef1234567890abcdef12345678",
+  "createdAt": "2025-03-19T08:30:00Z"
 }
 ```
 
 #### Update Profile
 ```http
-PUT /api/profile/{id}
+PUT /api/update-profile
 ```
 
 Updates an existing profile on the blockchain. Requires wallet signature and gas fees for the transaction.
@@ -105,11 +105,11 @@ Request body:
 Response:
 ```json
 {
-    "id": "123e4567-e89b-12d3-a456-426614174000",
-    "name": "Andy",
-    "email": "bungandy@gmail.com",
-    "walletAddress": "0x1234567890abcdef1234567890abcdef12345678",
-    "updatedAt": "2025-03-19T08:30:00Z"
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "name": "Andy",
+  "email": "bungandy@gmail.com",
+  "walletAddress": "0x1234567890abcdef1234567890abcdef12345678",
+  "updatedAt": "2025-03-19T08:30:00Z"
 }
 ```
 
